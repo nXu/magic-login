@@ -22,18 +22,26 @@ with the Google Authenticator app.
 ![Schema][schema]
 
 The basic process is as follows: 
+
 1. The website assigns a cryptographically secure random token for the user  
 when the user enables the magic login.
+
 2. The app saves the token of the user.
+
 3. On the login screens, the website displays a QR code containing the 
 login URL including a unique id used to identify the login request.
 The site maintains a WebSocket connection with the server.
-4. The user scans the QR code using the Magic Login app. 
+
+4. The user scans the QR code using the Magic Login app.
+ 
 5. The app calculates a HMAC signature based on the current time using
 the token of the user as key.
+
 6. The app sends a login request to the scanned login URL. 
+
 7. The server validates the login request, authenticates the user and sends
 the authentication cookie to the client website using WebSocket.
+
 8. Login is succesful, the user gets redirected.
 
 ## Requirements
