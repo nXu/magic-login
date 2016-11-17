@@ -6,6 +6,7 @@
   - How does Magic Login work?
 - Installation
 - Usage
+- Security
 - License
 
 ## What's this?
@@ -60,6 +61,10 @@ All you need to do is to display the following QR codes:
 
 - Magic Login token of the user to be saved in the mobile application
 - Login URL on the login page
+
+## Security
+If you discover a vulnerability in either the protocol or the implementation,
+please open a GitHub issue or contact me at nxu@nxu.hu. 
  
 ## License
 The project is open-sourced software licensed under the [MIT license][mit].
