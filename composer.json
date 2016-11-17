@@ -1,0 +1,24 @@
+{
+  "name": "nxu/magic-login",
+  "description": "Magical, (almost) passwordless login for Laravel",
+  "authors": [
+    {
+      "name": "Zsolt Fekete (nxu)",
+      "email": "nxu@nxu.hu",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=7.0.0",
+    "laravel/framework": "5.1.*|5.2.*|5.3.*",
+    "simplesoftwareio/simple-qrcode": "^1.5"
+  },
+  "suggest": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Nxu\\MagicLogin\\": "src/Nxu/MagicLogin"
+    }
+  }
+}
