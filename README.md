@@ -39,10 +39,12 @@ the token of the user as key.
 
 6. The app sends a login request to the scanned login URL. 
 
-7. The server validates the login request, authenticates the user and sends
-the authentication cookie to the client website using WebSocket.
+7. The server validates the login request and sends a one-time authentication 
+token to the client website using WebSocket.
 
-8. Login is succesful, the user gets redirected.
+8. The client authenticates itself using the one-time authentication token.
+
+8. Login is successful.
 
 ## Requirements
 - Laravel 5
