@@ -27,6 +27,7 @@ class MagicLoginRequest extends FormRequest
      * Verifies the magic login request.
      *
      * @param CanLoginMagically $user
+     *
      * @return bool
      */
     public function verify(CanLoginMagically $user) : bool
@@ -34,21 +35,22 @@ class MagicLoginRequest extends FormRequest
         $secret = $user->getMagicLoginSecret();
         $now = $this->getTokenGenerationTime();
         $token = $this->get('token');
+        $channel = $this->get('channel');
 
         // Try current time span
-        if ($this->getExpectedValue($now->timestamp, $secret) == $token) {
+        if ($this->getExpectedValue($now->timestamp, $channel, $secret) == $token) {
             return true;
         }
 
         // Try previous period
-        $previous = $this->getTokenGenerationTime()->subSeconds(30)->timestamp;
-        if ($this->getExpectedValue($previous->timestamp, $secret) == $token) {
+        $previous = $this->getTokenGenerationTime()->subSeconds(30);
+        if ($this->getExpectedValue($previous->timestamp, $channel, $secret) == $token) {
             return true;
         }
 
         // Try next period
-        $next = $this->getTokenGenerationTime()->addSeconds(30)->timestamp;
-        if ($this->getExpectedValue($next->timestamp, $secret) == $token) {
+        $next = $this->getTokenGenerationTime()->addSeconds(30);
+        if ($this->getExpectedValue($next->timestamp, $channel, $secret) == $token) {
             return true;
         }
 
@@ -58,14 +60,19 @@ class MagicLoginRequest extends FormRequest
     /**
      * Gets the expected value of the magical authentication token.
      *
-     * @param $timestamp
+     * @param int $timestamp
+     * @param string $channel
      * @param string $key
+     *
      * @return string
      */
-    protected function getExpectedValue($timestamp, $key) : string
+    protected function getExpectedValue($timestamp, $channel, $key) : string
     {
         $algorithm = config('magiclogin.hash_algo');
-        return hash_hmac($algorithm, $timestamp, $key);
+
+        $raw = "$timestamp-$channel";
+
+        return hash_hmac($algorithm, $raw, $key);
     }
 
     /**
@@ -75,7 +82,7 @@ class MagicLoginRequest extends FormRequest
      */
     protected function getTokenGenerationTime() : Carbon
     {
-        $now = Carbon::now();
+        $now = Carbon::now()->tz('UTC');
 
         if ($now->second >= 30) {
             return $now->setTime($now->hour, $now->minute, 30);

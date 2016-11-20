@@ -20,5 +20,10 @@
     "psr-4": {
       "Nxu\\MagicLogin\\": "src/Nxu/MagicLogin"
     }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.6",
+    "mockery/mockery": "^0.9.6",
+    "orchestra/testbench": "~3.0"
   }
 }

@@ -32,9 +32,10 @@ class MagicLoginController implements HandlesMagicLoginRequests
      * Handles the incoming magic login request.
      *
      * @param MagicLoginRequest $request
+     *
      * @return Response
      */
-    public function handleAppLogin(MagicLoginRequest $request)
+    public function handleAppLogin(MagicLoginRequest $request) : Response
     {
         // Get the user
         abort_unless($user = $this->getUser($request->get('user_id')), 404);
@@ -58,9 +59,10 @@ class MagicLoginController implements HandlesMagicLoginRequests
      * Handles the client login.
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * 
+     * @return Response
      */
-    public function handleClientLogin(Request $request)
+    public function handleClientLogin(Request $request) : Response
     {
         $this->validate($request, [
             'channel' => 'required',
@@ -95,6 +97,7 @@ class MagicLoginController implements HandlesMagicLoginRequests
      * Gets the user identified by its identifier.
      *
      * @param mixed $identifier
+     *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     protected function getUser($identifier)
